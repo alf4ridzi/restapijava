@@ -1,6 +1,7 @@
 package com.lowcontext.restapijava.exceptions.handler;
 
 import com.lowcontext.restapijava.exceptions.ResourceNotFoundException;
+import com.lowcontext.restapijava.exceptions.ValidationException;
 import com.lowcontext.restapijava.models.dto.JSendResponse;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -49,5 +50,19 @@ public class CustomizedResponseEntityExceptionHandler {
         );
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public final ResponseEntity<
+        JSendResponse<Map<String, String>>
+    > handlerValidationExceptions(
+        ValidationException exception,
+        WebRequest request
+    ) {
+        JSendResponse<Map<String, String>> response = JSendResponse.fail(
+            exception.getErrors()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

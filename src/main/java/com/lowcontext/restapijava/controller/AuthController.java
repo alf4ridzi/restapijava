@@ -27,6 +27,6 @@ public class AuthController {
         produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String register(@RequestBody RegisterRequest registerRequest) {
-        return "register";
+        return
     }
 }
