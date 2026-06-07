@@ -1,5 +1,6 @@
 package com.lowcontext.restapijava.services;
 
+import com.lowcontext.restapijava.models.User;
 import com.lowcontext.restapijava.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,5 +13,7 @@ public class AuthService {
 
     public void validateLogin() {}
 
-    public void register() {}
+    public User register(User user) {
+        return userRepository.save(user);
+    }
 }
