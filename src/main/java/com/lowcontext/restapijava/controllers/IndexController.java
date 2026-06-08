@@ -1,4 +1,4 @@
-package com.lowcontext.restapijava.controller;
+package com.lowcontext.restapijava.controllers;
 
 import com.lowcontext.restapijava.models.dto.JSendResponse;
 import java.lang.management.ManagementFactory;
