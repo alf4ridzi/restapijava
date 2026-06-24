@@ -1,0 +1,53 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:5432/restapijava
+      - SPRING_DATASOURCE_USERNAME=restapijava
+      - SPRING_DATASOURCE_PASSWORD=restapijava
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+    ports:
+      - "80:80"
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MARIADB_USER: restapijava
+      MARIADB_ROOT_PASSWORD: restapijava
+      MARIADB_DATABASE: restapijava
+      MARIADB_PASSWORD: restapijava
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - mariadb_network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-prestapijava",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql-data:
+
+networks:
+  mariadb_network:
+    driver: bridge
